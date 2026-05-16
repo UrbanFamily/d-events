@@ -1,25 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 122" fill="none">
-  <!-- Outer diamond frame -->
-  <polygon points="100,6 148,48 100,90 52,48" stroke="#C9A84C" stroke-width="0.9" fill="none"/>
-  <!-- Inner diamond (Art Deco double-line) -->
-  <polygon points="100,13 141,48 100,83 59,48" stroke="#C9A84C" stroke-width="0.35" fill="none" opacity="0.55"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 195 58" fill="none">
+  <!-- Large italic D -->
+  <text x="4" y="48"
+        font-family="Georgia, serif"
+        font-size="50"
+        font-style="italic"
+        font-weight="300"
+        fill="#2C2C2C">D</text>
 
-  <!-- Corner dot accents -->
-  <circle cx="100" cy="6"  r="2" fill="#C9A84C"/>
-  <circle cx="148" cy="48" r="2" fill="#C9A84C"/>
-  <circle cx="100" cy="90" r="2" fill="#C9A84C"/>
-  <circle cx="52"  cy="48" r="2" fill="#C9A84C"/>
+  <!-- Thin gold vertical hairline separator -->
+  <line x1="60" y1="7" x2="60" y2="51" stroke="#C9A84C" stroke-width="0.75"/>
 
-  <!-- D letterform, centered in diamond -->
-  <text x="100" y="65" text-anchor="middle"
-        font-family="Georgia, serif" font-size="36"
-        font-style="italic" font-weight="300" fill="#2C2C2C">D</text>
-
-  <!-- Thin separator line -->
-  <line x1="68" y1="100" x2="132" y2="100" stroke="#C9A84C" stroke-width="0.5" opacity="0.65"/>
-
-  <!-- EVENTS wordmark -->
-  <text x="100" y="115" text-anchor="middle"
-        font-family="Georgia, serif" font-size="10"
-        font-weight="400" fill="#2C2C2C" letter-spacing="5">EVENTS</text>
+  <!-- EVENTS in tracked small caps, vertically centred to the D -->
+  <text x="73" y="35"
+        font-family="Georgia, serif"
+        font-size="11.5"
+        font-weight="400"
+        fill="#2C2C2C"
+        letter-spacing="5">EVENTS</text>
 </svg>
