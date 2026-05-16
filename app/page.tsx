@@ -377,7 +377,7 @@ function Logo({ inverted = false }: { inverted?: boolean }) {
   return (
     <a href="#">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/logo.svg" alt="D·Events" width={160} height={40}
+      <img src="/logo.svg?v=3" alt="D·Events" width={160} height={40}
         style={{ filter: inverted ? "brightness(0) invert(1)" : "none", transition: "filter 0.4s ease" }} />
     </a>
   )
@@ -997,7 +997,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-center mb-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.svg" alt="D·Events" width={140} height={36} className="brightness-[2] opacity-80" />
+            <img src="/logo.svg?v=3" alt="D·Events" width={140} height={36} className="brightness-[2] opacity-80" />
           </div>
           <p className="text-xs text-white/40 tracking-wider italic mb-6">{t.footer.tagline}</p>
           <div className="h-px w-16 mx-auto mb-6" style={{ background: "linear-gradient(90deg,transparent,#C9A84C,transparent)" }} />
