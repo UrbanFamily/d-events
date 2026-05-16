@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import Image from "next/image"
 import { Menu, X, ChevronDown, Heart, Star, Phone, Mail, MapPin, Share2 } from "lucide-react"
 
 // ─── Translations ─────────────────────────────────────────────────────────────
@@ -172,7 +171,8 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
 function Logo({ className = "" }: { className?: string }) {
   return (
     <a href="#" className={`flex items-center gap-0 ${className}`}>
-      <Image src="/logo.svg" alt="D·Events" width={160} height={40} priority />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/logo.svg" alt="D·Events" width={160} height={40} />
     </a>
   )
 }
@@ -289,12 +289,11 @@ export default function Home() {
       <section className="relative h-screen flex flex-col items-center justify-center text-center px-6">
         {/* Background photo */}
         <div className="absolute inset-0">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=85"
             alt="Esküvői hangulat"
-            fill
-            className="object-cover"
-            priority
+            className="w-full h-full object-cover"
           />
           <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(20,15,10,0.55) 0%, rgba(20,15,10,0.35) 50%, rgba(20,15,10,0.6) 100%)" }} />
         </div>
@@ -415,11 +414,11 @@ export default function Home() {
             {galleryPhotos.map((photo, i) => (
               <Reveal key={i} delay={i * 80} className={i === 0 ? "row-span-2" : ""}>
                 <div className="relative overflow-hidden group" style={{ aspectRatio: i === 0 ? "3/4" : "4/3" }}>
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={`https://images.unsplash.com/photo-${photo.id}?auto=format&fit=crop&w=800&q=80`}
                     alt={photo.alt}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-4"
                     style={{ background: "linear-gradient(0deg, rgba(44,44,44,0.55), transparent)" }}>
@@ -561,7 +560,8 @@ export default function Home() {
       <footer className="py-12 px-6 text-center" style={{ background: "#2C2C2C" }}>
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-center mb-4">
-            <Image src="/logo.svg" alt="D·Events" width={140} height={36} className="brightness-[2] opacity-80" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.svg" alt="D·Events" width={140} height={36} className="brightness-[2] opacity-80" />
           </div>
           <p className="text-xs text-white/40 tracking-wider italic mb-6">{t.footer.tagline}</p>
           <div className="h-px w-16 mx-auto mb-6" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
