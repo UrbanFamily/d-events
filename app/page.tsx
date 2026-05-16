@@ -122,12 +122,12 @@ type Lang = "hu" | "en"
 // ─── Gallery photos from Unsplash ────────────────────────────────────────────
 
 const galleryPhotos = [
-  { id: "1519741497674-611481863552", alt: "Esküvői asztal / Wedding table", span: "col-span-1 row-span-2" },
-  { id: "1464366400600-82f50fcd9cef", alt: "Esküvői virágok / Wedding flowers", span: "col-span-1" },
-  { id: "1540575467063-178a50c2df87", alt: "Gála / Gala event", span: "col-span-1" },
-  { id: "1469371670807-013ccf25f16a", alt: "Esküvői pár / Wedding couple", span: "col-span-1" },
-  { id: "1478146059778-f7f35e7e9b0c", alt: "Esküvői dekoráció / Decor", span: "col-span-1" },
-  { id: "1519167758481-83f550bb49b3", alt: "Helyszín / Venue", span: "col-span-1" },
+  { id: "1519741497674-611481863552", alt: "Esküvői asztal / Wedding table" },
+  { id: "1511285560929-80b456fea0bc", alt: "Esküvői pár / Wedding couple" },
+  { id: "1540575467063-178a50c2df87", alt: "Gála / Gala event" },
+  { id: "1469371670807-013ccf25f16a", alt: "Esküvői hangulat / Wedding mood" },
+  { id: "1523438885200-e635ba2c371e", alt: "Esküvői dekoráció / Decor" },
+  { id: "1519167758481-83f550bb49b3", alt: "Helyszín / Venue" },
 ]
 
 // ─── Scroll animation hook ────────────────────────────────────────────────────
