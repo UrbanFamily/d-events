@@ -553,8 +553,6 @@ export default function Home() {
   return (
     <div className="min-h-screen" style={{ fontFamily: "var(--font-lato), system-ui, sans-serif" }}>
 
-      <PetalsCanvas />
-
       {/* ── NAV ── */}
       <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
         style={{ background: scrolled ? "rgba(250,247,242,0.97)" : "transparent", backdropFilter: scrolled ? "blur(8px)" : "none", borderBottom: scrolled ? "1px solid rgba(201,168,76,0.2)" : "none" }}>
