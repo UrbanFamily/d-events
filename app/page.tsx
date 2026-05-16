@@ -147,7 +147,6 @@ const galleryByType = [
     { id: "1469371670807-013ccf25f16a", alt: "Esküvői hangulat" },
     { id: "1523438885200-e635ba2c371e", alt: "Dekoráció" },
     { id: "1519167758481-83f550bb49b3", alt: "Helyszín" },
-    { id: "1540575467063-178a50c2df87", alt: "Rendezvény" },
   ],
   [
     { id: "1540575467063-178a50c2df87", alt: "Céges gála" },
@@ -155,7 +154,6 @@ const galleryByType = [
     { id: "1469371670807-013ccf25f16a", alt: "Csapatépítő" },
     { id: "1511285560929-80b456fea0bc", alt: "Évforduló" },
     { id: "1523438885200-e635ba2c371e", alt: "Díszterem" },
-    { id: "1519741497674-611481863552", alt: "Ünnepi vacsora" },
   ],
   [
     { id: "1523438885200-e635ba2c371e", alt: "Születésnap" },
@@ -163,7 +161,6 @@ const galleryByType = [
     { id: "1519741497674-611481863552", alt: "Privát vacsora" },
     { id: "1469371670807-013ccf25f16a", alt: "Kerti party" },
     { id: "1540575467063-178a50c2df87", alt: "Ünnepség" },
-    { id: "1519167758481-83f550bb49b3", alt: "Intim rendezvény" },
   ],
 ]
 
@@ -544,11 +541,10 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3" style={{ gridAutoRows: "220px" }}>
             {galleryByType[galleryTab].map((photo, i) => (
-              <div key={`${galleryTab}-${i}`} className={i === 0 ? "row-span-2" : ""}
-                style={{ opacity: 1, transition: "opacity 0.4s ease" }}>
-                <div className="relative overflow-hidden group h-full" style={{ aspectRatio: i === 0 ? "3/4" : "4/3", minHeight: i === 0 ? undefined : "180px" }}>
+              <div key={`${galleryTab}-${i}`} className={i === 0 ? "row-span-2" : ""}>
+                <div className="relative overflow-hidden group w-full h-full">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={`https://images.unsplash.com/photo-${photo.id}?auto=format&fit=crop&w=800&q=80`}
                     alt={photo.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
