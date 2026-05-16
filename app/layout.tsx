@@ -26,6 +26,25 @@ export const metadata: Metadata = {
   },
 }
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "EventPlanningService",
+  name: "D-Events",
+  url: "https://d-events.hu",
+  email: "hello@d-events.hu",
+  telephone: "+36301234567",
+  description: "Esküvő és rendezvényszervezés Szigetszentmiklóson — tökéletes részletekkel, személyes figyelemmel.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Szigetszentmiklós",
+    addressRegion: "Pest megye",
+    addressCountry: "HU",
+  },
+  areaServed: "HU",
+  priceRange: "$$",
+  sameAs: [],
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -33,6 +52,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="hu" className={`${cormorant.variable} ${lato.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   )
