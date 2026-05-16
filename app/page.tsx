@@ -56,7 +56,7 @@ const translations = {
       messagePlaceholder: "Meséljen az álmai rendezvényéről...",
       send: "Üzenet küldése",
       eventTypes: ["Esküvő", "Céges rendezvény", "Magánrendezvény", "Egyéb"],
-      address: "Budapest, V. kerület", phoneNum: "+36 30 123 4567", emailAddr: "hello@d-events.hu",
+      address: "Szigetszentmiklós, Pest megye", phoneNum: "+36 30 123 4567", emailAddr: "hello@d-events.hu",
     },
     footer: { copy: "© 2025 D-Events. Minden jog fenntartva.", tagline: "Ahol az álmok valósággá válnak." },
   },
@@ -110,7 +110,7 @@ const translations = {
       messagePlaceholder: "Tell us about your dream event...",
       send: "Send message",
       eventTypes: ["Wedding", "Corporate event", "Private celebration", "Other"],
-      address: "Budapest, District V", phoneNum: "+36 30 123 4567", emailAddr: "hello@d-events.hu",
+      address: "Szigetszentmiklós, Pest County", phoneNum: "+36 30 123 4567", emailAddr: "hello@d-events.hu",
     },
     footer: { copy: "© 2025 D-Events. All rights reserved.", tagline: "Where dreams become reality." },
   },
@@ -168,11 +168,17 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
 
 // ─── Logo component ───────────────────────────────────────────────────────────
 
-function Logo({ className = "" }: { className?: string }) {
+function Logo({ inverted = false, className = "" }: { inverted?: boolean; className?: string }) {
   return (
-    <a href="#" className={`flex items-center gap-0 ${className}`}>
+    <a href="#" className={`flex items-center ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/logo.svg" alt="D·Events" width={160} height={40} />
+      <img
+        src="/logo.svg"
+        alt="D·Events"
+        width={160}
+        height={40}
+        style={{ filter: inverted ? "brightness(0) invert(1)" : "none", transition: "filter 0.4s ease" }}
+      />
     </a>
   )
 }
@@ -243,7 +249,7 @@ export default function Home() {
         }}
       >
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
-          <Logo />
+          <Logo inverted={!scrolled} />
 
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((l) => (
