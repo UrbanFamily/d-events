@@ -1,17 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
 import { Menu, X, ChevronDown, Heart, Star, Phone, Mail, MapPin, Share2 } from "lucide-react"
+
+// ─── Translations ─────────────────────────────────────────────────────────────
 
 const translations = {
   hu: {
-    nav: {
-      about: "Rólunk",
-      services: "Szolgáltatások",
-      gallery: "Galéria",
-      testimonials: "Vélemények",
-      contact: "Kapcsolat",
-    },
+    nav: { about: "Rólunk", services: "Szolgáltatások", gallery: "Galéria", testimonials: "Vélemények", contact: "Kapcsolat" },
     hero: {
       tagline: "Minden pillanat tökéletes legyen",
       subtitle: "Esküvő & Rendezvényszervezés",
@@ -32,22 +29,10 @@ const translations = {
       label: "Szolgáltatások",
       title: "Amit kínálunk",
       items: [
-        {
-          title: "Esküvőszervezés",
-          desc: "Teljes körű esküvőszervezés a helyszín kiválasztásától az utolsó virágszirmig. Álmai esküvőjét minden részletében megtervezzük és koordináljuk.",
-        },
-        {
-          title: "Céges rendezvények",
-          desc: "Gálák, csapatépítők, évfordulók — professzionális szervezéssel, amelyek erősítik a céges identitást és maradandó benyomást keltenek.",
-        },
-        {
-          title: "Magánrendezvények",
-          desc: "Születésnapok, évfordulók, keresztelők — személyre szabott ünnepségek, amelyek tükrözik az Ön egyéniségét és stílusát.",
-        },
-        {
-          title: "Dekoráció & Styling",
-          desc: "Egyedi virágkompozíciók, tematikus dekorációk, helyszínkialakítás — minden részlet összhangban az Ön elképzelésével.",
-        },
+        { title: "Esküvőszervezés", desc: "Teljes körű esküvőszervezés a helyszín kiválasztásától az utolsó virágszirmig. Álmai esküvőjét minden részletében megtervezzük és koordináljuk." },
+        { title: "Céges rendezvények", desc: "Gálák, csapatépítők, évfordulók — professzionális szervezéssel, amelyek erősítik a céges identitást és maradandó benyomást keltenek." },
+        { title: "Magánrendezvények", desc: "Születésnapok, évfordulók, keresztelők — személyre szabott ünnepségek, amelyek tükrözik az Ön egyéniségét és stílusát." },
+        { title: "Dekoráció & Styling", desc: "Egyedi virágkompozíciók, tematikus dekorációk, helyszínkialakítás — minden részlet összhangban az Ön elképzelésével." },
       ],
     },
     gallery: {
@@ -59,52 +44,25 @@ const translations = {
       label: "Vélemények",
       title: "Amit ügyfeleink mondanak",
       items: [
-        {
-          text: "A D-Events csapata minden várakozásunkat felülmúlta. Az esküvőnk tökéletes volt — minden részlet gondosan megtervezve, minden pillanat varázslatos.",
-          name: "Kovács Anna & Péter",
-          role: "Esküvői pár, 2024",
-        },
-        {
-          text: "Céges gálánkat a D-Events szervezte, és a visszajelzések messze felülmúlták az eddigieket. Profi, kreatív, megbízható csapat.",
-          name: "Dr. Nagy Gábor",
-          role: "Ügyvezető, TechHub Kft.",
-        },
-        {
-          text: "Anyám 70. születésnapját egy álommá varázsolták. Minden vendégünk lenyűgözve távozott. Szívből ajánlom mindenkinek.",
-          name: "Szabó Eszter",
-          role: "Magánrendezvény, 2023",
-        },
+        { text: "A D-Events csapata minden várakozásunkat felülmúlta. Az esküvőnk tökéletes volt — minden részlet gondosan megtervezve, minden pillanat varázslatos.", name: "Kovács Anna & Péter", role: "Esküvői pár, 2024" },
+        { text: "Céges gálánkat a D-Events szervezte, és a visszajelzések messze felülmúlták az eddigieket. Profi, kreatív, megbízható csapat.", name: "Dr. Nagy Gábor", role: "Ügyvezető, TechHub Kft." },
+        { text: "Anyám 70. születésnapját egy álommá varázsolták. Minden vendégünk lenyűgözve távozott. Szívből ajánlom mindenkinek.", name: "Szabó Eszter", role: "Magánrendezvény, 2023" },
       ],
     },
     contact: {
       label: "Kapcsolat",
       title: "Kezdjük el együtt tervezni",
       subtitle: "Töltse ki az alábbi űrlapot és 24 órán belül felvesszük Önnel a kapcsolatot.",
-      name: "Neve",
-      email: "E-mail cím",
-      phone: "Telefonszám",
-      eventType: "Rendezvény típusa",
-      message: "Üzenet",
+      name: "Neve", email: "E-mail cím", phone: "Telefonszám", eventType: "Rendezvény típusa", message: "Üzenet",
       messagePlaceholder: "Meséljen az álmai rendezvényéről...",
       send: "Üzenet küldése",
       eventTypes: ["Esküvő", "Céges rendezvény", "Magánrendezvény", "Egyéb"],
-      address: "Budapest, V. kerület",
-      phoneNum: "+36 30 123 4567",
-      emailAddr: "hello@d-events.hu",
+      address: "Budapest, V. kerület", phoneNum: "+36 30 123 4567", emailAddr: "hello@d-events.hu",
     },
-    footer: {
-      copy: "© 2025 D-Events. Minden jog fenntartva.",
-      tagline: "Ahol az álmok valósággá válnak.",
-    },
+    footer: { copy: "© 2025 D-Events. Minden jog fenntartva.", tagline: "Ahol az álmok valósággá válnak." },
   },
   en: {
-    nav: {
-      about: "About",
-      services: "Services",
-      gallery: "Gallery",
-      testimonials: "Testimonials",
-      contact: "Contact",
-    },
+    nav: { about: "About", services: "Services", gallery: "Gallery", testimonials: "Testimonials", contact: "Contact" },
     hero: {
       tagline: "Every moment, perfectly crafted",
       subtitle: "Wedding & Event Planning",
@@ -125,22 +83,10 @@ const translations = {
       label: "Services",
       title: "What we offer",
       items: [
-        {
-          title: "Wedding Planning",
-          desc: "Full-service wedding coordination from venue selection to the last petal. We plan and manage every detail of your dream wedding.",
-        },
-        {
-          title: "Corporate Events",
-          desc: "Galas, team-buildings, anniversaries — professionally organized events that strengthen your brand and leave lasting impressions.",
-        },
-        {
-          title: "Private Celebrations",
-          desc: "Birthdays, anniversaries, christenings — bespoke celebrations that reflect your personality and style.",
-        },
-        {
-          title: "Décor & Styling",
-          desc: "Custom floral arrangements, thematic décor, venue dressing — every detail in harmony with your vision.",
-        },
+        { title: "Wedding Planning", desc: "Full-service wedding coordination from venue selection to the last petal. We plan and manage every detail of your dream wedding." },
+        { title: "Corporate Events", desc: "Galas, team-buildings, anniversaries — professionally organised events that strengthen your brand and leave lasting impressions." },
+        { title: "Private Celebrations", desc: "Birthdays, anniversaries, christenings — bespoke celebrations that reflect your personality and style." },
+        { title: "Décor & Styling", desc: "Custom floral arrangements, thematic décor, venue dressing — every detail in harmony with your vision." },
       ],
     },
     gallery: {
@@ -152,61 +98,129 @@ const translations = {
       label: "Testimonials",
       title: "What our clients say",
       items: [
-        {
-          text: "The D-Events team exceeded every expectation. Our wedding was perfect — every detail thoughtfully planned, every moment magical.",
-          name: "Anna & Péter Kovács",
-          role: "Wedding couple, 2024",
-        },
-        {
-          text: "D-Events organised our corporate gala and the feedback far surpassed anything we'd received before. Professional, creative, reliable.",
-          name: "Dr. Gábor Nagy",
-          role: "CEO, TechHub Ltd.",
-        },
-        {
-          text: "They turned my mother's 70th birthday into a dream. Every guest left in awe. I wholeheartedly recommend them to everyone.",
-          name: "Eszter Szabó",
-          role: "Private event, 2023",
-        },
+        { text: "The D-Events team exceeded every expectation. Our wedding was perfect — every detail thoughtfully planned, every moment magical.", name: "Anna & Péter Kovács", role: "Wedding couple, 2024" },
+        { text: "D-Events organised our corporate gala and the feedback far surpassed anything we'd received before. Professional, creative, reliable.", name: "Dr. Gábor Nagy", role: "CEO, TechHub Ltd." },
+        { text: "They turned my mother's 70th birthday into a dream. Every guest left in awe. I wholeheartedly recommend them to everyone.", name: "Eszter Szabó", role: "Private event, 2023" },
       ],
     },
     contact: {
       label: "Contact",
       title: "Let's start planning together",
       subtitle: "Fill in the form below and we'll get back to you within 24 hours.",
-      name: "Your name",
-      email: "Email address",
-      phone: "Phone number",
-      eventType: "Event type",
-      message: "Message",
+      name: "Your name", email: "Email address", phone: "Phone number", eventType: "Event type", message: "Message",
       messagePlaceholder: "Tell us about your dream event...",
       send: "Send message",
       eventTypes: ["Wedding", "Corporate event", "Private celebration", "Other"],
-      address: "Budapest, District V",
-      phoneNum: "+36 30 123 4567",
-      emailAddr: "hello@d-events.hu",
+      address: "Budapest, District V", phoneNum: "+36 30 123 4567", emailAddr: "hello@d-events.hu",
     },
-    footer: {
-      copy: "© 2025 D-Events. All rights reserved.",
-      tagline: "Where dreams become reality.",
-    },
+    footer: { copy: "© 2025 D-Events. All rights reserved.", tagline: "Where dreams become reality." },
   },
 }
 
 type Lang = "hu" | "en"
 
-const galleryItems = [
-  { bg: "bg-rose-100", label: "Esküvő / Wedding" },
-  { bg: "bg-amber-50", label: "Gála / Gala" },
-  { bg: "bg-pink-100", label: "Dekoráció / Décor" },
-  { bg: "bg-yellow-50", label: "Virág / Flowers" },
-  { bg: "bg-rose-50", label: "Helyszín / Venue" },
-  { bg: "bg-amber-100", label: "Részlet / Detail" },
+// ─── Gallery photos from Unsplash ────────────────────────────────────────────
+
+const galleryPhotos = [
+  { id: "1519741497674-611481863552", alt: "Esküvői asztal / Wedding table", span: "col-span-1 row-span-2" },
+  { id: "1464366400600-82f50fcd9cef", alt: "Esküvői virágok / Wedding flowers", span: "col-span-1" },
+  { id: "1540575467063-178a50c2df87", alt: "Gála / Gala event", span: "col-span-1" },
+  { id: "1469371670807-013ccf25f16a", alt: "Esküvői pár / Wedding couple", span: "col-span-1" },
+  { id: "1478146059778-f7f35e7e9b0c", alt: "Esküvői dekoráció / Decor", span: "col-span-1" },
+  { id: "1519167758481-83f550bb49b3", alt: "Helyszín / Venue", span: "col-span-1" },
 ]
+
+// ─── Scroll animation hook ────────────────────────────────────────────────────
+
+function useReveal() {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect() } },
+      { threshold: 0.12 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+  return { ref, visible }
+}
+
+// ─── Reveal wrapper ───────────────────────────────────────────────────────────
+
+function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const { ref, visible } = useReveal()
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(28px)",
+        transition: `opacity 0.8s ease ${delay}ms, transform 0.8s ease ${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
+// ─── Logo component ───────────────────────────────────────────────────────────
+
+function Logo({ className = "" }: { className?: string }) {
+  return (
+    <a href="#" className={`flex items-center gap-0 ${className}`}>
+      <Image src="/logo.svg" alt="D·Events" width={160} height={40} priority />
+    </a>
+  )
+}
+
+// ─── Gold divider ─────────────────────────────────────────────────────────────
+
+function GoldDivider() {
+  return (
+    <div className="flex items-center justify-center gap-3 my-6">
+      <div className="h-px w-10" style={{ background: "linear-gradient(90deg, transparent, #C9A84C)" }} />
+      <Heart className="w-3 h-3 fill-[#C9A84C] text-[#C9A84C]" />
+      <div className="h-px w-10" style={{ background: "linear-gradient(90deg, #C9A84C, transparent)" }} />
+    </div>
+  )
+}
+
+// ─── Section label ────────────────────────────────────────────────────────────
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return <p className="text-xs tracking-[0.35em] text-[#C9A84C] uppercase mb-3">{children}</p>
+}
+
+// ─── Section heading ──────────────────────────────────────────────────────────
+
+function SectionHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <h2
+      className="text-4xl md:text-5xl text-[#2C2C2C]"
+      style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 400, fontStyle: "italic" }}
+    >
+      {children}
+    </h2>
+  )
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Home() {
   const [lang, setLang] = useState<Lang>("hu")
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const t = translations[lang]
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    window.addEventListener("scroll", onScroll)
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   const navLinks = [
     { href: "#about", label: t.nav.about },
@@ -219,43 +233,51 @@ export default function Home() {
   return (
     <div className="min-h-screen" style={{ fontFamily: "var(--font-lato), system-ui, sans-serif" }}>
 
-      {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#faf7f2]/95 backdrop-blur-sm border-b border-[#c9a84c]/20">
+      {/* ── NAV ── */}
+      <nav
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+        style={{
+          background: scrolled ? "rgba(250,247,242,0.97)" : "transparent",
+          backdropFilter: scrolled ? "blur(8px)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(201,168,76,0.2)" : "none",
+        }}
+      >
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
-          <a href="#" className="text-2xl tracking-widest text-[#c9a84c] uppercase" style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}>
-            D·Events
-          </a>
+          <Logo />
 
-          {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((l) => (
-              <a key={l.href} href={l.href} className="text-sm tracking-wider text-[#5a5a5a] hover:text-[#c9a84c] transition-colors uppercase">
+              <a key={l.href} href={l.href}
+                className="text-xs tracking-[0.2em] uppercase transition-colors hover:text-[#C9A84C]"
+                style={{ color: scrolled ? "#5a5a5a" : "rgba(255,255,255,0.9)" }}>
                 {l.label}
               </a>
             ))}
             <button
               onClick={() => setLang(lang === "hu" ? "en" : "hu")}
-              className="text-sm tracking-wider text-[#5a5a5a] hover:text-[#c9a84c] transition-colors border border-[#c9a84c]/40 px-3 py-1 rounded-full"
+              className="text-xs tracking-wider border px-3 py-1 rounded-full transition-colors hover:text-[#C9A84C] hover:border-[#C9A84C]"
+              style={{ color: scrolled ? "#5a5a5a" : "rgba(255,255,255,0.85)", borderColor: scrolled ? "rgba(201,168,76,0.4)" : "rgba(255,255,255,0.4)" }}
             >
               {lang === "hu" ? "EN" : "HU"}
             </button>
           </div>
 
-          {/* Mobile */}
           <div className="md:hidden flex items-center gap-3">
-            <button onClick={() => setLang(lang === "hu" ? "en" : "hu")} className="text-xs text-[#c9a84c] border border-[#c9a84c]/40 px-2 py-0.5 rounded-full">
+            <button onClick={() => setLang(lang === "hu" ? "en" : "hu")}
+              className="text-xs text-[#C9A84C] border border-[#C9A84C]/40 px-2 py-0.5 rounded-full">
               {lang === "hu" ? "EN" : "HU"}
             </button>
-            <button onClick={() => setMenuOpen(!menuOpen)} className="text-[#2c2c2c]">
+            <button onClick={() => setMenuOpen(!menuOpen)} style={{ color: scrolled ? "#2c2c2c" : "white" }}>
               {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
 
         {menuOpen && (
-          <div className="md:hidden bg-[#faf7f2] border-t border-[#c9a84c]/20 px-6 py-4 flex flex-col gap-4">
+          <div className="md:hidden bg-[#faf7f2] border-t border-[#C9A84C]/20 px-6 py-4 flex flex-col gap-4">
             {navLinks.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)} className="text-sm tracking-wider text-[#5a5a5a] hover:text-[#c9a84c] transition-colors uppercase">
+              <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)}
+                className="text-xs tracking-[0.2em] text-[#5a5a5a] hover:text-[#C9A84C] transition-colors uppercase">
                 {l.label}
               </a>
             ))}
@@ -263,242 +285,236 @@ export default function Home() {
         )}
       </nav>
 
-      {/* HERO */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16"
-        style={{ background: "linear-gradient(160deg, #fdf9f3 0%, #f5ede0 50%, #faf7f2 100%)" }}>
-
-        {/* Decorative circles */}
-        <div className="absolute top-24 left-12 w-64 h-64 rounded-full opacity-20" style={{ background: "radial-gradient(circle, #e4c97e, transparent)" }} />
-        <div className="absolute bottom-24 right-12 w-96 h-96 rounded-full opacity-15" style={{ background: "radial-gradient(circle, #c49a9a, transparent)" }} />
+      {/* ── HERO ── */}
+      <section className="relative h-screen flex flex-col items-center justify-center text-center px-6">
+        {/* Background photo */}
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=85"
+            alt="Esküvői hangulat"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(20,15,10,0.55) 0%, rgba(20,15,10,0.35) 50%, rgba(20,15,10,0.6) 100%)" }} />
+        </div>
 
         <div className="relative z-10 max-w-3xl mx-auto">
-          {/* Ornament */}
-          <div className="flex items-center justify-center gap-4 mb-8 animate-fade-in">
-            <div className="h-px w-16" style={{ background: "linear-gradient(90deg, transparent, #c9a84c)" }} />
-            <Heart className="w-4 h-4 text-[#c9a84c] fill-[#c9a84c]" />
-            <div className="h-px w-16" style={{ background: "linear-gradient(90deg, #c9a84c, transparent)" }} />
+          <div className="flex items-center justify-center gap-4 mb-8" style={{ opacity: 1, animation: "fadeIn 1.2s ease both" }}>
+            <div className="h-px w-16" style={{ background: "linear-gradient(90deg, transparent, rgba(201,168,76,0.8))" }} />
+            <Heart className="w-4 h-4 fill-[#C9A84C] text-[#C9A84C]" />
+            <div className="h-px w-16" style={{ background: "linear-gradient(90deg, rgba(201,168,76,0.8), transparent)" }} />
           </div>
 
-          <p className="text-sm tracking-[0.3em] text-[#c9a84c] uppercase mb-4 animate-fade-in-up">{t.hero.subtitle}</p>
+          <p className="text-sm tracking-[0.35em] text-[#E4C97E] uppercase mb-4" style={{ animation: "fadeInUp 1s 0.1s ease both" }}>
+            {t.hero.subtitle}
+          </p>
 
-          <h1 className="text-5xl md:text-7xl text-[#2c2c2c] leading-tight mb-6 animate-fade-in-up delay-200"
-            style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 400, fontStyle: "italic" }}>
+          <h1
+            className="text-5xl md:text-7xl text-white leading-tight mb-6"
+            style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 300, fontStyle: "italic", animation: "fadeInUp 1s 0.25s ease both", textShadow: "0 2px 20px rgba(0,0,0,0.3)" }}
+          >
             {t.hero.tagline}
           </h1>
 
-          <p className="text-base md:text-lg text-[#5a5a5a] max-w-xl mx-auto leading-relaxed mb-10 animate-fade-in-up delay-400">
+          <p className="text-base md:text-lg text-white/80 max-w-xl mx-auto leading-relaxed mb-10"
+            style={{ animation: "fadeInUp 1s 0.45s ease both" }}>
             {t.hero.description}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-600">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center" style={{ animation: "fadeInUp 1s 0.65s ease both" }}>
             <a href="#contact"
-              className="px-8 py-3.5 text-sm tracking-wider uppercase text-white transition-all"
-              style={{ background: "linear-gradient(135deg, #c9a84c, #a07830)", letterSpacing: "0.15em" }}>
+              className="px-8 py-3.5 text-xs tracking-[0.2em] uppercase text-white transition-opacity hover:opacity-90"
+              style={{ background: "linear-gradient(135deg, #C9A84C, #A07830)" }}>
               {t.hero.cta}
             </a>
             <a href="#gallery"
-              className="px-8 py-3.5 text-sm tracking-wider uppercase text-[#c9a84c] border border-[#c9a84c] hover:bg-[#c9a84c]/5 transition-all"
-              style={{ letterSpacing: "0.15em" }}>
+              className="px-8 py-3.5 text-xs tracking-[0.2em] uppercase text-white border border-white/40 hover:border-white/80 transition-colors">
               {t.hero.ctaSecondary}
             </a>
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[#c9a84c]/60 animate-fade-in delay-800">
-          <div className="h-12 w-px" style={{ background: "linear-gradient(180deg, transparent, #c9a84c)" }} />
-          <ChevronDown className="w-4 h-4" />
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40" style={{ animation: "fadeIn 2s 1.2s ease both" }}>
+          <div className="h-12 w-px" style={{ background: "linear-gradient(180deg, transparent, rgba(201,168,76,0.6))" }} />
+          <ChevronDown className="w-4 h-4 text-[#C9A84C]/60" />
         </div>
       </section>
 
-      {/* ABOUT */}
-      <section id="about" className="py-24 px-6 bg-white">
+      {/* ── ABOUT ── */}
+      <section id="about" className="py-28 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.3em] text-[#c9a84c] uppercase mb-3">{t.about.label}</p>
-            <h2 className="text-4xl md:text-5xl text-[#2c2c2c] mb-6"
-              style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 400, fontStyle: "italic" }}>
-              {t.about.title}
-            </h2>
-            <div className="h-px w-16 mx-auto" style={{ background: "linear-gradient(90deg, transparent, #c9a84c, transparent)" }} />
-          </div>
+          <Reveal className="text-center mb-16">
+            <SectionLabel>{t.about.label}</SectionLabel>
+            <SectionHeading>{t.about.title}</SectionHeading>
+            <GoldDivider />
+          </Reveal>
 
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="space-y-6">
-              <p className="text-[#5a5a5a] leading-relaxed text-lg">{t.about.p1}</p>
-              <p className="text-[#5a5a5a] leading-relaxed">{t.about.p2}</p>
-            </div>
+            <Reveal delay={100}>
+              <div className="space-y-6">
+                <p className="text-[#5a5a5a] leading-relaxed text-lg">{t.about.p1}</p>
+                <p className="text-[#5a5a5a] leading-relaxed">{t.about.p2}</p>
+              </div>
+            </Reveal>
 
-            <div className="grid grid-cols-3 gap-6">
-              {[t.about.stat1, t.about.stat2, t.about.stat3].map((s) => (
-                <div key={s.label} className="text-center p-6 border border-[#c9a84c]/20 bg-[#faf7f2]">
-                  <div className="text-3xl md:text-4xl text-[#c9a84c] mb-2"
-                    style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontStyle: "italic" }}>
-                    {s.number}
+            <Reveal delay={200}>
+              <div className="grid grid-cols-3 gap-6">
+                {[t.about.stat1, t.about.stat2, t.about.stat3].map((s) => (
+                  <div key={s.label} className="text-center p-6 border border-[#C9A84C]/20 bg-[#faf7f2]">
+                    <div className="text-3xl md:text-4xl text-[#C9A84C] mb-2"
+                      style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontStyle: "italic" }}>
+                      {s.number}
+                    </div>
+                    <div className="text-xs text-[#5a5a5a] tracking-wider uppercase leading-tight">{s.label}</div>
                   </div>
-                  <div className="text-xs text-[#5a5a5a] tracking-wider uppercase leading-tight">{s.label}</div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section id="services" className="py-24 px-6" style={{ background: "#f5ede0" }}>
+      {/* ── SERVICES ── */}
+      <section id="services" className="py-28 px-6" style={{ background: "#f5ede0" }}>
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.3em] text-[#c9a84c] uppercase mb-3">{t.services.label}</p>
-            <h2 className="text-4xl md:text-5xl text-[#2c2c2c]"
-              style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 400, fontStyle: "italic" }}>
-              {t.services.title}
-            </h2>
-            <div className="h-px w-16 mx-auto mt-6" style={{ background: "linear-gradient(90deg, transparent, #c9a84c, transparent)" }} />
-          </div>
+          <Reveal className="text-center mb-16">
+            <SectionLabel>{t.services.label}</SectionLabel>
+            <SectionHeading>{t.services.title}</SectionHeading>
+            <GoldDivider />
+          </Reveal>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {t.services.items.map((item, i) => (
-              <div key={i} className="bg-white p-8 group hover:shadow-lg transition-shadow duration-500">
-                <div className="w-10 h-px mb-6" style={{ background: "#c9a84c" }} />
-                <h3 className="text-xl text-[#2c2c2c] mb-3"
-                  style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 500 }}>
-                  {item.title}
-                </h3>
-                <p className="text-sm text-[#5a5a5a] leading-relaxed">{item.desc}</p>
-              </div>
+              <Reveal key={i} delay={i * 100}>
+                <div className="bg-white p-8 h-full group hover:shadow-xl transition-shadow duration-500">
+                  <div className="w-10 h-px mb-6" style={{ background: "#C9A84C" }} />
+                  <h3 className="text-xl text-[#2C2C2C] mb-3"
+                    style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 500 }}>
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-[#5a5a5a] leading-relaxed">{item.desc}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* GALLERY */}
-      <section id="gallery" className="py-24 px-6 bg-white">
+      {/* ── GALLERY ── */}
+      <section id="gallery" className="py-28 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.3em] text-[#c9a84c] uppercase mb-3">{t.gallery.label}</p>
-            <h2 className="text-4xl md:text-5xl text-[#2c2c2c] mb-3"
-              style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 400, fontStyle: "italic" }}>
-              {t.gallery.title}
-            </h2>
-            <p className="text-sm text-[#5a5a5a] tracking-wider">{t.gallery.subtitle}</p>
-            <div className="h-px w-16 mx-auto mt-6" style={{ background: "linear-gradient(90deg, transparent, #c9a84c, transparent)" }} />
-          </div>
+          <Reveal className="text-center mb-16">
+            <SectionLabel>{t.gallery.label}</SectionLabel>
+            <SectionHeading>{t.gallery.title}</SectionHeading>
+            <p className="text-sm text-[#5a5a5a] tracking-wider mt-2">{t.gallery.subtitle}</p>
+            <GoldDivider />
+          </Reveal>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {galleryItems.map((item, i) => (
-              <div key={i}
-                className={`${item.bg} relative overflow-hidden group cursor-pointer`}
-                style={{ aspectRatio: i === 0 || i === 5 ? "4/3" : "3/4" }}>
-                <div className="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: "linear-gradient(0deg, rgba(44,44,44,0.5), transparent)" }}>
-                  <span className="text-white text-xs tracking-wider">{item.label}</span>
+            {galleryPhotos.map((photo, i) => (
+              <Reveal key={i} delay={i * 80} className={i === 0 ? "row-span-2" : ""}>
+                <div className="relative overflow-hidden group" style={{ aspectRatio: i === 0 ? "3/4" : "4/3" }}>
+                  <Image
+                    src={`https://images.unsplash.com/photo-${photo.id}?auto=format&fit=crop&w=800&q=80`}
+                    alt={photo.alt}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-4"
+                    style={{ background: "linear-gradient(0deg, rgba(44,44,44,0.55), transparent)" }}>
+                    <span className="text-white text-xs tracking-wider">{photo.alt}</span>
+                  </div>
                 </div>
-                {/* Placeholder content */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Heart className="w-8 h-8 text-[#c9a84c]/30" />
-                </div>
-              </div>
+              </Reveal>
             ))}
           </div>
-
-          <p className="text-center text-xs text-[#5a5a5a]/60 mt-6 tracking-wider italic">
-            {lang === "hu" ? "Hamarosan valódi fotókkal frissítve" : "Photos coming soon"}
-          </p>
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section id="testimonials" className="py-24 px-6" style={{ background: "linear-gradient(135deg, #2c2c2c, #3d3320)" }}>
+      {/* ── TESTIMONIALS ── */}
+      <section id="testimonials" className="py-28 px-6" style={{ background: "linear-gradient(135deg, #2c2c2c, #3d3320)" }}>
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.3em] text-[#c9a84c] uppercase mb-3">{t.testimonials.label}</p>
+          <Reveal className="text-center mb-16">
+            <SectionLabel>{t.testimonials.label}</SectionLabel>
             <h2 className="text-4xl md:text-5xl text-white"
               style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 400, fontStyle: "italic" }}>
               {t.testimonials.title}
             </h2>
-            <div className="h-px w-16 mx-auto mt-6" style={{ background: "linear-gradient(90deg, transparent, #c9a84c, transparent)" }} />
-          </div>
+            <GoldDivider />
+          </Reveal>
 
           <div className="grid md:grid-cols-3 gap-8">
             {t.testimonials.items.map((item, i) => (
-              <div key={i} className="p-8 border border-[#c9a84c]/20 bg-white/5">
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, j) => (
-                    <Star key={j} className="w-3 h-3 text-[#c9a84c] fill-[#c9a84c]" />
-                  ))}
+              <Reveal key={i} delay={i * 120}>
+                <div className="p-8 border border-[#C9A84C]/20 bg-white/5 h-full flex flex-col">
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(5)].map((_, j) => <Star key={j} className="w-3 h-3 text-[#C9A84C] fill-[#C9A84C]" />)}
+                  </div>
+                  <p className="text-white/80 text-sm leading-relaxed mb-6 italic flex-1">&ldquo;{item.text}&rdquo;</p>
+                  <div>
+                    <div className="h-px mb-4" style={{ background: "linear-gradient(90deg, #C9A84C, transparent)" }} />
+                    <div className="text-white font-medium text-sm">{item.name}</div>
+                    <div className="text-[#C9A84C]/70 text-xs tracking-wider mt-0.5">{item.role}</div>
+                  </div>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed mb-6 italic">&ldquo;{item.text}&rdquo;</p>
-                <div className="h-px mb-4" style={{ background: "linear-gradient(90deg, #c9a84c, transparent)" }} />
-                <div>
-                  <div className="text-white font-medium text-sm">{item.name}</div>
-                  <div className="text-[#c9a84c]/70 text-xs tracking-wider mt-0.5">{item.role}</div>
-                </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CONTACT */}
-      <section id="contact" className="py-24 px-6 bg-[#faf7f2]">
+      {/* ── CONTACT ── */}
+      <section id="contact" className="py-28 px-6 bg-[#faf7f2]">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.3em] text-[#c9a84c] uppercase mb-3">{t.contact.label}</p>
-            <h2 className="text-4xl md:text-5xl text-[#2c2c2c] mb-3"
-              style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 400, fontStyle: "italic" }}>
-              {t.contact.title}
-            </h2>
-            <p className="text-sm text-[#5a5a5a]">{t.contact.subtitle}</p>
-            <div className="h-px w-16 mx-auto mt-6" style={{ background: "linear-gradient(90deg, transparent, #c9a84c, transparent)" }} />
-          </div>
+          <Reveal className="text-center mb-16">
+            <SectionLabel>{t.contact.label}</SectionLabel>
+            <SectionHeading>{t.contact.title}</SectionHeading>
+            <p className="text-sm text-[#5a5a5a] mt-2">{t.contact.subtitle}</p>
+            <GoldDivider />
+          </Reveal>
 
           <div className="grid md:grid-cols-2 gap-16">
-            {/* Form */}
-            <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-xs tracking-wider text-[#5a5a5a] uppercase mb-1.5">{t.contact.name}</label>
-                  <input className="w-full bg-white border border-[#c9a84c]/30 px-4 py-3 text-sm text-[#2c2c2c] focus:outline-none focus:border-[#c9a84c] transition-colors" />
+            <Reveal>
+              <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-xs tracking-wider text-[#5a5a5a] uppercase mb-1.5">{t.contact.name}</label>
+                    <input className="w-full bg-white border border-[#C9A84C]/30 px-4 py-3 text-sm text-[#2c2c2c] focus:outline-none focus:border-[#C9A84C] transition-colors" />
+                  </div>
+                  <div>
+                    <label className="block text-xs tracking-wider text-[#5a5a5a] uppercase mb-1.5">{t.contact.email}</label>
+                    <input type="email" className="w-full bg-white border border-[#C9A84C]/30 px-4 py-3 text-sm text-[#2c2c2c] focus:outline-none focus:border-[#C9A84C] transition-colors" />
+                  </div>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-xs tracking-wider text-[#5a5a5a] uppercase mb-1.5">{t.contact.phone}</label>
+                    <input type="tel" className="w-full bg-white border border-[#C9A84C]/30 px-4 py-3 text-sm text-[#2c2c2c] focus:outline-none focus:border-[#C9A84C] transition-colors" />
+                  </div>
+                  <div>
+                    <label className="block text-xs tracking-wider text-[#5a5a5a] uppercase mb-1.5">{t.contact.eventType}</label>
+                    <select className="w-full bg-white border border-[#C9A84C]/30 px-4 py-3 text-sm text-[#2c2c2c] focus:outline-none focus:border-[#C9A84C] transition-colors appearance-none">
+                      <option value="">—</option>
+                      {t.contact.eventTypes.map((type) => <option key={type}>{type}</option>)}
+                    </select>
+                  </div>
                 </div>
                 <div>
-                  <label className="block text-xs tracking-wider text-[#5a5a5a] uppercase mb-1.5">{t.contact.email}</label>
-                  <input type="email" className="w-full bg-white border border-[#c9a84c]/30 px-4 py-3 text-sm text-[#2c2c2c] focus:outline-none focus:border-[#c9a84c] transition-colors" />
+                  <label className="block text-xs tracking-wider text-[#5a5a5a] uppercase mb-1.5">{t.contact.message}</label>
+                  <textarea rows={5} placeholder={t.contact.messagePlaceholder}
+                    className="w-full bg-white border border-[#C9A84C]/30 px-4 py-3 text-sm text-[#2c2c2c] focus:outline-none focus:border-[#C9A84C] transition-colors resize-none" />
                 </div>
-              </div>
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-xs tracking-wider text-[#5a5a5a] uppercase mb-1.5">{t.contact.phone}</label>
-                  <input type="tel" className="w-full bg-white border border-[#c9a84c]/30 px-4 py-3 text-sm text-[#2c2c2c] focus:outline-none focus:border-[#c9a84c] transition-colors" />
-                </div>
-                <div>
-                  <label className="block text-xs tracking-wider text-[#5a5a5a] uppercase mb-1.5">{t.contact.eventType}</label>
-                  <select className="w-full bg-white border border-[#c9a84c]/30 px-4 py-3 text-sm text-[#2c2c2c] focus:outline-none focus:border-[#c9a84c] transition-colors appearance-none">
-                    <option value="">—</option>
-                    {t.contact.eventTypes.map((type) => (
-                      <option key={type} value={type}>{type}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label className="block text-xs tracking-wider text-[#5a5a5a] uppercase mb-1.5">{t.contact.message}</label>
-                <textarea rows={5} placeholder={t.contact.messagePlaceholder}
-                  className="w-full bg-white border border-[#c9a84c]/30 px-4 py-3 text-sm text-[#2c2c2c] focus:outline-none focus:border-[#c9a84c] transition-colors resize-none" />
-              </div>
-              <button type="submit"
-                className="w-full py-4 text-sm tracking-[0.2em] uppercase text-white transition-opacity hover:opacity-90"
-                style={{ background: "linear-gradient(135deg, #c9a84c, #a07830)" }}>
-                {t.contact.send}
-              </button>
-            </form>
+                <button type="submit"
+                  className="w-full py-4 text-xs tracking-[0.2em] uppercase text-white transition-opacity hover:opacity-90"
+                  style={{ background: "linear-gradient(135deg, #C9A84C, #A07830)" }}>
+                  {t.contact.send}
+                </button>
+              </form>
+            </Reveal>
 
-            {/* Info */}
-            <div className="space-y-10">
-              <div>
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="h-px flex-1" style={{ background: "linear-gradient(90deg, #c9a84c, transparent)" }} />
-                  <Heart className="w-4 h-4 text-[#c9a84c] fill-[#c9a84c] shrink-0" />
-                </div>
+            <Reveal delay={150}>
+              <div className="space-y-10">
                 <div className="space-y-6">
                   {[
                     { icon: <MapPin className="w-4 h-4" />, text: t.contact.address },
@@ -506,54 +522,50 @@ export default function Home() {
                     { icon: <Mail className="w-4 h-4" />, text: t.contact.emailAddr },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-4">
-                      <div className="text-[#c9a84c]">{item.icon}</div>
+                      <div className="text-[#C9A84C] shrink-0">{item.icon}</div>
                       <span className="text-sm text-[#5a5a5a]">{item.text}</span>
                     </div>
                   ))}
                 </div>
-              </div>
 
-              <div>
-                <p className="text-xs tracking-[0.2em] text-[#5a5a5a] uppercase mb-4">
-                  {lang === "hu" ? "Kövessen minket" : "Follow us"}
-                </p>
-                <div className="flex gap-4">
-                  {[
-                    { icon: <Share2 className="w-4 h-4" />, label: "Instagram" },
-                    { icon: <Share2 className="w-4 h-4" />, label: "Facebook" },
-                  ].map((s) => (
-                    <a key={s.label} href="#"
-                      className="w-10 h-10 border border-[#c9a84c]/40 flex items-center justify-center text-[#c9a84c] hover:bg-[#c9a84c] hover:text-white transition-all"
-                      aria-label={s.label}>
-                      {s.icon}
-                    </a>
-                  ))}
+                <div>
+                  <p className="text-xs tracking-[0.2em] text-[#5a5a5a] uppercase mb-4">
+                    {lang === "hu" ? "Kövessen minket" : "Follow us"}
+                  </p>
+                  <div className="flex gap-3">
+                    {[{ icon: <Share2 className="w-4 h-4" />, label: "Instagram" }, { icon: <Share2 className="w-4 h-4" />, label: "Facebook" }].map((s) => (
+                      <a key={s.label} href="#"
+                        className="w-10 h-10 border border-[#C9A84C]/40 flex items-center justify-center text-[#C9A84C] hover:bg-[#C9A84C] hover:text-white transition-all"
+                        aria-label={s.label}>
+                        {s.icon}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-6 border border-[#C9A84C]/20 bg-white">
+                  <p className="text-[#2C2C2C] leading-relaxed italic"
+                    style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.15rem" }}>
+                    {lang === "hu"
+                      ? <>&bdquo;Minden nagy rendezvény egy kis álommal kezdődik.&rdquo;</>
+                      : <>&ldquo;Every great event begins with a small dream.&rdquo;</>}
+                  </p>
                 </div>
               </div>
-
-              <div className="p-6 border border-[#c9a84c]/20 bg-white">
-                <p className="text-[#2c2c2c] text-sm leading-relaxed italic"
-                  style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontSize: "1.1rem" }}>
-                  {lang === "hu"
-                    ? <>&bdquo;Minden nagy rendezvény egy kis álommal kezdődik.&rdquo;</>
-                    : <>&ldquo;Every great event begins with a small dream.&rdquo;</>}
-                </p>
-              </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-10 px-6 text-center" style={{ background: "#2c2c2c" }}>
+      {/* ── FOOTER ── */}
+      <footer className="py-12 px-6 text-center" style={{ background: "#2C2C2C" }}>
         <div className="max-w-6xl mx-auto">
-          <a href="#" className="text-2xl tracking-widest text-[#c9a84c] uppercase block mb-3"
-            style={{ fontFamily: "var(--font-cormorant), Georgia, serif" }}>
-            D·Events
-          </a>
+          <div className="flex justify-center mb-4">
+            <Image src="/logo.svg" alt="D·Events" width={140} height={36} className="brightness-[2] opacity-80" />
+          </div>
           <p className="text-xs text-white/40 tracking-wider italic mb-6">{t.footer.tagline}</p>
-          <div className="h-px w-16 mx-auto mb-6" style={{ background: "linear-gradient(90deg, transparent, #c9a84c, transparent)" }} />
-          <p className="text-xs text-white/30 tracking-wider">{t.footer.copy}</p>
+          <div className="h-px w-16 mx-auto mb-6" style={{ background: "linear-gradient(90deg, transparent, #C9A84C, transparent)" }} />
+          <p className="text-xs text-white/25 tracking-wider">{t.footer.copy}</p>
         </div>
       </footer>
 
