@@ -436,7 +436,7 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }: {
         onClick={(e) => { e.stopPropagation(); onPrev() }}>
         <ChevronLeft className="w-7 h-7" />
       </button>
-      <div className="mx-20 max-h-[85vh] flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-h-[85vh] flex flex-col items-center px-12 md:px-24" onClick={(e) => e.stopPropagation()}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={`https://images.unsplash.com/photo-${photo.id}?auto=format&fit=crop&w=1400&q=90`}
           alt={photo.alt} className="max-w-full max-h-[78vh] object-contain" />
@@ -484,7 +484,7 @@ function BeforeAfterSlider({ beforeLabel, afterLabel }: { beforeLabel: string; a
   const p = Math.max(1, Math.min(99, pos))
 
   return (
-    <div className="relative overflow-hidden select-none" style={{ aspectRatio: "16/9" }}>
+    <div className="relative overflow-hidden select-none ba-slider" style={{ aspectRatio: "4/3" }}>
       {/* After image */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80"
@@ -607,7 +607,7 @@ export default function Home() {
           <p className="text-sm tracking-[0.35em] text-[#E4C97E] uppercase mb-4" style={{ animation: "fadeInUp 1s 0.1s ease both" }}>
             {t.hero.subtitle}
           </p>
-          <h1 className="text-5xl md:text-7xl text-white leading-tight mb-6"
+          <h1 className="text-4xl sm:text-5xl md:text-7xl text-white leading-tight mb-6"
             style={{ fontFamily: "var(--font-cormorant), Georgia, serif", fontWeight: 300, fontStyle: "italic", animation: "fadeInUp 1s 0.25s ease both", textShadow: "0 2px 20px rgba(0,0,0,0.3)" }}>
             {t.hero.tagline}
           </h1>
@@ -629,7 +629,7 @@ export default function Home() {
       </section>
 
       {/* ── ABOUT ── */}
-      <section id="about" className="py-28 px-6 bg-white">
+      <section id="about" className="py-16 md:py-28 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-16">
             <SectionLabel>{t.about.label}</SectionLabel>
@@ -658,7 +658,7 @@ export default function Home() {
       </section>
 
       {/* ── PROCESS TIMELINE ── */}
-      <section id="process" className="py-28 px-6" style={{ background: "linear-gradient(135deg,#2c2c2c,#3d3320)" }}>
+      <section id="process" className="py-16 md:py-28 px-6" style={{ background: "linear-gradient(135deg,#2c2c2c,#3d3320)" }}>
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-16">
             <SectionLabel>{t.process.label}</SectionLabel>
@@ -691,7 +691,7 @@ export default function Home() {
       </section>
 
       {/* ── SERVICES ── */}
-      <section id="services" className="py-28 px-6" style={{ background: "#f5ede0" }}>
+      <section id="services" className="py-16 md:py-28 px-6" style={{ background: "#f5ede0" }}>
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-16">
             <SectionLabel>{t.services.label}</SectionLabel>
@@ -715,7 +715,7 @@ export default function Home() {
       </section>
 
       {/* ── PARTNERS ── */}
-      <section className="py-20 px-6 bg-white border-t border-[#C9A84C]/10">
+      <section className="py-12 md:py-20 px-6 bg-white border-t border-[#C9A84C]/10">
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-12">
             <SectionLabel>{t.partners.label}</SectionLabel>
@@ -739,7 +739,7 @@ export default function Home() {
       </section>
 
       {/* ── BEFORE / AFTER ── */}
-      <section className="py-28 px-6" style={{ background: "#f5ede0" }}>
+      <section className="py-16 md:py-28 px-6" style={{ background: "#f5ede0" }}>
         <div className="max-w-5xl mx-auto">
           <Reveal className="text-center mb-12">
             <SectionLabel>{t.beforeAfter.label}</SectionLabel>
@@ -754,7 +754,7 @@ export default function Home() {
       </section>
 
       {/* ── GALLERY with tabs + lightbox ── */}
-      <section id="gallery" className="py-28 px-6 bg-white">
+      <section id="gallery" className="py-16 md:py-28 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-10">
             <SectionLabel>{t.gallery.label}</SectionLabel>
@@ -770,7 +770,7 @@ export default function Home() {
               </button>
             ))}
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3" style={{ gridAutoRows: "220px" }}>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 gallery-grid" style={{ gridAutoRows: "220px" }}>
             {photos.map((photo, i) => (
               <div key={`${galleryTab}-${i}`} className={i === 0 ? "row-span-2" : ""}>
                 <div className="relative overflow-hidden group w-full h-full cursor-pointer"
@@ -793,7 +793,7 @@ export default function Home() {
       </section>
 
       {/* ── BUDGET CALCULATOR ── */}
-      <section className="py-28 px-6" style={{ background: "linear-gradient(135deg,#2c2c2c,#3d3320)" }}>
+      <section className="py-16 md:py-28 px-6" style={{ background: "linear-gradient(135deg,#2c2c2c,#3d3320)" }}>
         <div className="max-w-3xl mx-auto">
           <Reveal className="text-center mb-14">
             <SectionLabel>{t.calculator.label}</SectionLabel>
@@ -855,7 +855,7 @@ export default function Home() {
       </section>
 
       {/* ── FAQ ── */}
-      <section id="faq" className="py-28 px-6 bg-white">
+      <section id="faq" className="py-16 md:py-28 px-6 bg-white">
         <div className="max-w-3xl mx-auto">
           <Reveal className="text-center mb-14">
             <SectionLabel>{t.faq.label}</SectionLabel>
@@ -888,7 +888,7 @@ export default function Home() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section id="testimonials" className="py-28 px-6" style={{ background: "linear-gradient(135deg,#2c2c2c,#3d3320)" }}>
+      <section id="testimonials" className="py-16 md:py-28 px-6" style={{ background: "linear-gradient(135deg,#2c2c2c,#3d3320)" }}>
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-16">
             <SectionLabel>{t.testimonials.label}</SectionLabel>
@@ -914,7 +914,7 @@ export default function Home() {
       </section>
 
       {/* ── CONTACT ── */}
-      <section id="contact" className="py-28 px-6 bg-[#faf7f2]">
+      <section id="contact" className="py-16 md:py-28 px-6 bg-[#faf7f2]">
         <div className="max-w-6xl mx-auto">
           <Reveal className="text-center mb-16">
             <SectionLabel>{t.contact.label}</SectionLabel>
@@ -1038,17 +1038,21 @@ export default function Home() {
         }
         input[type=range]::-webkit-slider-thumb {
           -webkit-appearance: none;
-          width: 16px; height: 16px;
+          width: 18px; height: 18px;
           border-radius: 50%;
           background: #C9A84C;
           cursor: pointer;
         }
         input[type=range]::-moz-range-thumb {
-          width: 16px; height: 16px;
+          width: 18px; height: 18px;
           border-radius: 50%;
           background: #C9A84C;
           border: none;
           cursor: pointer;
+        }
+        @media (max-width: 768px) {
+          .gallery-grid { grid-auto-rows: 140px !important; }
+          .ba-slider { aspect-ratio: 3/2 !important; }
         }
       `}</style>
 
