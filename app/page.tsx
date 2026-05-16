@@ -263,17 +263,17 @@ function PetalsCanvas() {
     resize()
     window.addEventListener("resize", resize)
 
-    const petals = Array.from({ length: 22 }, () => ({
+    const petals = Array.from({ length: 7 }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight - window.innerHeight,
-      size: Math.random() * 7 + 4,
-      speed: Math.random() * 0.8 + 0.4,
+      size: Math.random() * 5 + 4,
+      speed: Math.random() * 0.4 + 0.2,
       rot: Math.random() * Math.PI * 2,
-      rotSpeed: (Math.random() - 0.5) * 0.03,
+      rotSpeed: (Math.random() - 0.5) * 0.015,
       sway: Math.random() * Math.PI * 2,
-      swaySpeed: Math.random() * 0.015 + 0.008,
-      opacity: Math.random() * 0.35 + 0.15,
-      color: Math.random() > 0.55 ? "#e8c5c5" : "#e4c97e",
+      swaySpeed: Math.random() * 0.008 + 0.004,
+      opacity: Math.random() * 0.08 + 0.05,
+      color: Math.random() > 0.5 ? "#d4a8a8" : "#c9a84c",
     }))
 
     let raf: number
@@ -597,7 +597,7 @@ export default function Home() {
           <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=85"
             alt="Esküvői hangulat" className="w-full h-full object-cover" />
         </div>
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom,rgba(20,15,10,0.5) 0%,rgba(20,15,10,0.3) 50%,rgba(20,15,10,0.65) 100%)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom,rgba(10,8,5,0.28) 0%,rgba(10,8,5,0.15) 40%,rgba(10,8,5,0.42) 100%)" }} />
         <div className="relative z-10 max-w-3xl mx-auto">
           <div className="flex items-center justify-center gap-4 mb-8" style={{ animation: "fadeIn 1.2s ease both" }}>
             <div className="h-px w-16" style={{ background: "linear-gradient(90deg,transparent,rgba(201,168,76,0.8))" }} />
