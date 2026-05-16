@@ -1,21 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" fill="none">
-  <!-- Ornamental left line -->
-  <line x1="8" y1="40" x2="28" y2="40" stroke="#C9A84C" stroke-width="0.8"/>
-  <circle cx="30" cy="40" r="1.5" fill="#C9A84C"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 122" fill="none">
+  <!-- Outer diamond frame -->
+  <polygon points="100,6 148,48 100,90 52,48" stroke="#C9A84C" stroke-width="0.9" fill="none"/>
+  <!-- Inner diamond (Art Deco double-line) -->
+  <polygon points="100,13 141,48 100,83 59,48" stroke="#C9A84C" stroke-width="0.35" fill="none" opacity="0.55"/>
 
-  <!-- D letterform -->
-  <text x="38" y="52" font-family="Georgia, serif" font-size="38" font-style="italic" font-weight="300" fill="#2C2C2C" letter-spacing="-1">D</text>
+  <!-- Corner dot accents -->
+  <circle cx="100" cy="6"  r="2" fill="#C9A84C"/>
+  <circle cx="148" cy="48" r="2" fill="#C9A84C"/>
+  <circle cx="100" cy="90" r="2" fill="#C9A84C"/>
+  <circle cx="52"  cy="48" r="2" fill="#C9A84C"/>
 
-  <!-- Dot separator -->
-  <circle cx="72" cy="42" r="2" fill="#C9A84C"/>
+  <!-- D letterform, centered in diamond -->
+  <text x="100" y="65" text-anchor="middle"
+        font-family="Georgia, serif" font-size="36"
+        font-style="italic" font-weight="300" fill="#2C2C2C">D</text>
 
-  <!-- EVENTS text -->
-  <text x="78" y="51" font-family="Georgia, serif" font-size="16" font-weight="400" fill="#2C2C2C" letter-spacing="4">EVENTS</text>
+  <!-- Thin separator line -->
+  <line x1="68" y1="100" x2="132" y2="100" stroke="#C9A84C" stroke-width="0.5" opacity="0.65"/>
 
-  <!-- Ornamental right line -->
-  <circle cx="168" cy="40" r="1.5" fill="#C9A84C"/>
-  <line x1="170" y1="40" x2="190" y2="40" stroke="#C9A84C" stroke-width="0.8"/>
-
-  <!-- Thin gold underline under EVENTS -->
-  <line x1="78" y1="55" x2="163" y2="55" stroke="#C9A84C" stroke-width="0.5" opacity="0.6"/>
+  <!-- EVENTS wordmark -->
+  <text x="100" y="115" text-anchor="middle"
+        font-family="Georgia, serif" font-size="10"
+        font-weight="400" fill="#2C2C2C" letter-spacing="5">EVENTS</text>
 </svg>
