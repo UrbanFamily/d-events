@@ -41,3 +41,10 @@ body {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+
+/* The hero image's slow zoom and the before/after slider reach a pixel or two
+   past the edge on phones, which let the whole page scroll sideways. */
+html,
+body {
+  overflow-x: clip;
+}

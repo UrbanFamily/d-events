@@ -245,71 +245,6 @@ function formatBudget(guests: number, typeIdx: number): string {
   return `${(totalM * 0.8).toFixed(1)} – ${(totalM * 1.2).toFixed(1)} M Ft`
 }
 
-// ─── Falling petals canvas ────────────────────────────────────────────────────
-
-function PetalsCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-
-    const resize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-    resize()
-    window.addEventListener("resize", resize)
-
-    const petals = Array.from({ length: 7 }, () => ({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight - window.innerHeight,
-      size: Math.random() * 5 + 4,
-      speed: Math.random() * 0.4 + 0.2,
-      rot: Math.random() * Math.PI * 2,
-      rotSpeed: (Math.random() - 0.5) * 0.015,
-      sway: Math.random() * Math.PI * 2,
-      swaySpeed: Math.random() * 0.008 + 0.004,
-      opacity: Math.random() * 0.08 + 0.05,
-      color: Math.random() > 0.5 ? "#d4a8a8" : "#c9a84c",
-    }))
-
-    let raf: number
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      petals.forEach((p) => {
-        p.y += p.speed
-        p.rot += p.rotSpeed
-        p.sway += p.swaySpeed
-        p.x += Math.sin(p.sway) * 0.7
-        if (p.y > canvas.height + 20) {
-          p.y = -20
-          p.x = Math.random() * canvas.width
-        }
-        ctx.save()
-        ctx.translate(p.x, p.y)
-        ctx.rotate(p.rot)
-        ctx.globalAlpha = p.opacity
-        ctx.fillStyle = p.color
-        ctx.beginPath()
-        ctx.ellipse(0, 0, p.size * 0.45, p.size, 0, 0, Math.PI * 2)
-        ctx.fill()
-        ctx.restore()
-      })
-      raf = requestAnimationFrame(draw)
-    }
-    draw()
-    return () => {
-      cancelAnimationFrame(raf)
-      window.removeEventListener("resize", resize)
-    }
-  }, [])
-
-  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none" style={{ zIndex: 5 }} />
-}
-
 // ─── Animated counter ─────────────────────────────────────────────────────────
 
 function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
@@ -458,7 +393,7 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }: {
 
 // ─── Sticky CTA bar ───────────────────────────────────────────────────────────
 
-function StickyCtaBar({ lang, ctaText, stickyText, visible }: { lang: Lang; ctaText: string; stickyText: string; visible: boolean }) {
+function StickyCtaBar({ ctaText, stickyText, visible }: { ctaText: string; stickyText: string; visible: boolean }) {
   return (
     <div className="fixed bottom-0 left-0 right-0 transition-transform duration-500"
       style={{ zIndex: 60, transform: visible ? "translateY(0)" : "translateY(100%)" }}>
@@ -1006,7 +941,7 @@ export default function Home() {
       </footer>
 
       {/* ── STICKY CTA ── */}
-      <StickyCtaBar lang={lang} ctaText={t.hero.cta} stickyText={t.sticky} visible={stickyVisible} />
+      <StickyCtaBar ctaText={t.hero.cta} stickyText={t.sticky} visible={stickyVisible} />
 
       {/* ── LIGHTBOX ── */}
       {lightbox !== null && (
